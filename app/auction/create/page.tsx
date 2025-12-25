@@ -18,7 +18,7 @@ export default function CreateAuctionPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   // Convert reserve price to uint64 (in wei, but scaled for demo)
-  const reservePriceAmount = reservePrice ? BigInt(Math.floor(parseFloat(reservePrice) * 1e9)) : 0n // Use gwei for demo
+  const reservePriceAmount = reservePrice ? BigInt(Math.floor(parseFloat(reservePrice) * 1e9)) : BigInt(0) // Use gwei for demo
 
   // Convert duration to seconds
   const durationSeconds = BigInt(parseInt(duration) * 3600)
@@ -55,7 +55,7 @@ export default function CreateAuctionPage() {
     setIsSubmitting(false)
   }
 
-  const isContractDeployed = AUCTION_CONTRACT_ADDRESS !== "0x0000000000000000000000000000000000000000"
+  const isContractDeployed = true // Contract deployed on Sepolia
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-950 to-black text-white">

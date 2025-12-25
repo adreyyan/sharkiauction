@@ -21,7 +21,7 @@ export default function AuctionsPage() {
   // Fetch all auctions
   useEffect(() => {
     const fetchAuctions = async () => {
-      if (!auctionCount || AUCTION_CONTRACT_ADDRESS === "0x0000000000000000000000000000000000000000") {
+      if (!auctionCount) {
         setLoading(false)
         return
       }
@@ -51,10 +51,10 @@ export default function AuctionsPage() {
   const formatTimeLeft = (endTime: bigint) => {
     const now = BigInt(Math.floor(Date.now() / 1000))
     const diff = endTime - now
-    if (diff <= 0n) return 'Ended'
+    if (diff <= BigInt(0)) return 'Ended'
     
-    const hours = Number(diff / 3600n)
-    const minutes = Number((diff % 3600n) / 60n)
+    const hours = Number(diff / BigInt(3600))
+    const minutes = Number((diff % BigInt(3600)) / BigInt(60))
     
     if (hours > 24) return `${Math.floor(hours / 24)}d ${hours % 24}h`
     if (hours > 0) return `${hours}h ${minutes}m`
@@ -64,24 +64,24 @@ export default function AuctionsPage() {
   // Demo auctions for UI preview
   const demoAuctions = [
     {
-      id: 1n,
+      id: BigInt(1),
       creator: '0x20ce...FDd6',
       itemDescription: 'Rare Digital Artwork #1234',
       highestBidder: '0x0000000000000000000000000000000000000000',
       endTime: BigInt(Math.floor(Date.now() / 1000) + 86400),
       status: AuctionStatus.Active,
       createdAt: BigInt(Math.floor(Date.now() / 1000)),
-      totalBids: 3n,
+      totalBids: BigInt(3),
     },
     {
-      id: 2n,
+      id: BigInt(2),
       creator: '0x1234...5678',
       itemDescription: 'Exclusive NFT Collection Access',
       highestBidder: '0x9876...5432',
       endTime: BigInt(Math.floor(Date.now() / 1000) + 3600),
       status: AuctionStatus.Active,
       createdAt: BigInt(Math.floor(Date.now() / 1000) - 86400),
-      totalBids: 7n,
+      totalBids: BigInt(7),
     },
   ]
 
@@ -110,14 +110,7 @@ export default function AuctionsPage() {
           )}
         </div>
 
-        {/* Contract Status Banner */}
-        {AUCTION_CONTRACT_ADDRESS === "0x0000000000000000000000000000000000000000" && (
-          <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4 mb-6">
-            <p className="text-yellow-400">
-              ⚠️ Contract not deployed yet. Deploy to Sepolia and update the address in <code className="bg-zinc-800 px-2 py-1 rounded">lib/auctionContract.ts</code>
-            </p>
-          </div>
-        )}
+        {/* Contract deployed on Sepolia */}
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">

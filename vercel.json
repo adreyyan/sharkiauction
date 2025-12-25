@@ -1,5 +1,5 @@
 {
-  "name": "sharkitrading",
+  "name": "sharkiauction",
   "buildCommand": "npm run build",
   "outputDirectory": ".next",
   "framework": "nextjs",

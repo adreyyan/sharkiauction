@@ -24,7 +24,7 @@ export default function AuctionDetailPage() {
     endTime: BigInt(Math.floor(Date.now() / 1000) + 86400),
     status: AuctionStatus.Active,
     createdAt: BigInt(Math.floor(Date.now() / 1000)),
-    totalBids: 3n,
+    totalBids: BigInt(3),
   }
 
   // Fetch auction data from contract
@@ -33,7 +33,7 @@ export default function AuctionDetailPage() {
     abi: AUCTION_ABI,
     functionName: 'getAuction',
     args: [BigInt(auctionId || 0)],
-    enabled: AUCTION_CONTRACT_ADDRESS !== "0x0000000000000000000000000000000000000000",
+    enabled: true,
   })
 
   // Use demo data if contract not deployed
@@ -49,7 +49,7 @@ export default function AuctionDetailPage() {
   } : demoAuction
 
   // Convert bid to uint64
-  const bidAmountUint64 = bidAmount ? BigInt(Math.floor(parseFloat(bidAmount) * 1e9)) : 0n
+  const bidAmountUint64 = bidAmount ? BigInt(Math.floor(parseFloat(bidAmount) * 1e9)) : BigInt(0)
 
   // Prepare place bid
   const { config: bidConfig, error: bidPrepareError } = usePrepareContractWrite({
@@ -57,7 +57,7 @@ export default function AuctionDetailPage() {
     abi: AUCTION_ABI,
     functionName: 'placeBid',
     args: [BigInt(auctionId || 0), bidAmountUint64],
-    enabled: isConnected && bidAmount.length > 0 && AUCTION_CONTRACT_ADDRESS !== "0x0000000000000000000000000000000000000000",
+    enabled: isConnected && bidAmount.length > 0,
   })
 
   const { data: bidData, write: placeBid, error: bidWriteError } = useContractWrite(bidConfig)
@@ -87,14 +87,14 @@ export default function AuctionDetailPage() {
       const now = BigInt(Math.floor(Date.now() / 1000))
       const diff = auction.endTime - now
       
-      if (diff <= 0n) {
+      if (diff <= BigInt(0)) {
         setTimeLeft('Ended')
         return
       }
       
-      const hours = Number(diff / 3600n)
-      const minutes = Number((diff % 3600n) / 60n)
-      const seconds = Number(diff % 60n)
+      const hours = Number(diff / BigInt(3600))
+      const minutes = Number((diff % BigInt(3600)) / BigInt(60))
+      const seconds = Number(diff % BigInt(60))
       
       if (hours > 24) {
         setTimeLeft(`${Math.floor(hours / 24)}d ${hours % 24}h ${minutes}m`)
@@ -119,7 +119,7 @@ export default function AuctionDetailPage() {
 
   const isCreator = address?.toLowerCase() === auction.creator.toLowerCase()
   const isActive = auction.status === AuctionStatus.Active && timeLeft !== 'Ended'
-  const isContractDeployed = AUCTION_CONTRACT_ADDRESS !== "0x0000000000000000000000000000000000000000"
+  const isContractDeployed = true // Contract deployed on Sepolia
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-950 to-black text-white">
@@ -175,7 +175,7 @@ export default function AuctionDetailPage() {
             <div className="bg-zinc-900/50 backdrop-blur border border-zinc-800 rounded-xl p-6">
               <h3 className="font-semibold mb-4">🔐 Encrypted Bids</h3>
               
-              {auction.totalBids > 0n ? (
+              {auction.totalBids > BigInt(0) ? (
                 <div className="space-y-3">
                   {Array.from({ length: Number(auction.totalBids) }).map((_, i) => (
                     <div key={i} className="flex justify-between items-center bg-zinc-800/50 rounded-lg p-3">
@@ -229,7 +229,7 @@ export default function AuctionDetailPage() {
                     </p>
                     <button
                       onClick={() => endAuction?.()}
-                      disabled={isEnding || auction.totalBids === 0n}
+                      disabled={isEnding || auction.totalBids === BigInt(0)}
                       className="w-full py-3 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 rounded-xl font-semibold transition-all"
                     >
                       {isEnding ? 'Ending...' : '🏁 End Auction'}

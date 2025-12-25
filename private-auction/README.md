@@ -2,7 +2,7 @@
 
 > **Sealed-bid auctions with encrypted bids using Zama's fhEVM**
 
-Built with the same fhEVM structure as the approved [sharkitrading](https://github.com/adreyyan/sharkitrading) project.
+Built with Zama's fhEVM for true on-chain privacy.
 
 ---
 
@@ -146,7 +146,7 @@ After deployment:
 
 - [Zama fhEVM Docs](https://docs.zama.ai/fhevm)
 - [fhEVM Solidity Library](https://github.com/zama-ai/fhevm)
-- [Similar Approved Project: sharkitrading](https://github.com/adreyyan/sharkitrading)
+- [Sharki Auction](https://github.com/adreyyan/sharkiauction)
 
 ---
 
