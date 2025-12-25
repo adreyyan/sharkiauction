@@ -1,160 +1,132 @@
-'use client';
+'use client'
 
-import React, { Suspense, useState, useEffect } from 'react';
-import { useAccount } from 'wagmi';
-import dynamic from 'next/dynamic';
-import TradeInterface from './components/TradeInterface';
-import VerifiedNFTSearch from './components/VerifiedNFTSearch';
-import Sidebar from './components/Sidebar';
-import MobileMenuButton from './components/MobileMenuButton';
-import ChainSwitcher from './components/ChainSwitcher';
+import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { useAccount } from 'wagmi'
+import Link from 'next/link'
 
-// Dynamically import ConnectButton to avoid SSR issues
-const ConnectButton = dynamic(
-  () => import('@rainbow-me/rainbowkit').then((mod) => ({ default: mod.ConnectButton })),
-  { 
-    ssr: false,
-    loading: () => (
-      <div className="jupiter-card px-4 py-2 animate-pulse">
-        <div className="h-10 w-24 bg-zinc-700 rounded-lg"></div>
-      </div>
-    )
-  }
-);
-
-const TradePanel = dynamic(
-  () => import('./components/TradePanel'),
-  { 
-    ssr: false,
-    loading: () => (
-      <div className="jupiter-card p-6 animate-pulse">
-        <div className="space-y-4">
-          <div className="h-6 bg-zinc-700 rounded w-1/3"></div>
-          <div className="h-32 bg-zinc-700 rounded"></div>
-        </div>
-      </div>
-    )
-  }
-);
-
-export default function HomePage() {
-  const { address, isConnected } = useAccount();
-  const [selectedNFT, setSelectedNFT] = useState<any>(null);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  const handleNFTSelect = (nft: any) => {
-    setSelectedNFT(nft);
-  };
-
-  if (!isConnected) {
-    return (
-      <div className="flex min-h-screen bg-zinc-950">
-        {/* Sidebar */}
-        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-        
-        {/* Main content */}
-        <div className="flex-1 lg:pl-72">
-          <div className="p-4 lg:p-8">
-            {/* Mobile header - chain beside wallet */}
-            <div className="lg:hidden flex items-center justify-between mb-6">
-              <MobileMenuButton 
-                onClick={() => setSidebarOpen(true)} 
-                isOpen={sidebarOpen} 
-              />
-              <div className="flex items-center gap-2">
-                <ChainSwitcher />
-                <ConnectButton label="Connect Wallet" showBalance={false} />
-              </div>
-            </div>
-
-            {/* Desktop header */}
-            <div className="hidden lg:flex items-center justify-between mb-8">
-              <div>
-              </div>
-              <div className="flex items-center gap-4">
-                <ChainSwitcher />
-                <ConnectButton label="Connect Wallet" showBalance={false} />
-              </div>
-            </div>
-
-            {/* Welcome card - Jupiter style */}
-            <div className="flex items-center justify-center min-h-[60vh]">
-              <div className="jupiter-card p-8 max-w-md text-center">
-                <div className="w-16 h-16 bg-green-500/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <span className="text-2xl">🔄</span>
-                </div>
-                
-                <h2 className="text-xl font-semibold mb-6 text-white">Connect Your Wallet</h2>
-                
-                <div className="flex justify-center mb-6">
-                  <ConnectButton label="Connect Wallet" showBalance={false} />
-                </div>
-                
-                <div className="text-sm">
-                  <a 
-                    href="/recover" 
-                    className="text-green-400 hover:text-green-300 transition-colors"
-                  >
-                    Lost a trade? Recover it here →
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+export default function Home() {
+  const { isConnected, address } = useAccount()
 
   return (
-    <div className="flex min-h-screen bg-zinc-950">
-      {/* Sidebar */}
-      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      
-      {/* Main content */}
-      <div className={`flex-1 ${sidebarOpen ? 'lg:pl-72' : ''}`}>
-        <div className="p-4 lg:p-6">
-          {/* Mobile header - chain beside wallet */}
-          <div className="lg:hidden flex items-center justify-between mb-6">
-            <MobileMenuButton 
-              onClick={() => setSidebarOpen(true)} 
-              isOpen={sidebarOpen} 
-            />
-            <div className="flex items-center gap-2">
-              <ChainSwitcher />
-              <ConnectButton label="Connected" showBalance={false} />
-            </div>
-          </div>
-
-          {/* Desktop header with ChainSwitcher */}
-          <div className="hidden lg:flex items-center justify-between mb-6">
-            <div>
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-950 to-black text-white">
+      <div className="container mx-auto px-4 py-16">
+        <div className="max-w-4xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+              🔨 Private Auction System
+            </h1>
+            <p className="text-xl text-zinc-400 mb-8">
+              Sealed-bid auctions with encrypted bids using Zama's FHEVM
+            </p>
             
-            <div className="flex items-center gap-4">
-              <div className="w-80">
-                <VerifiedNFTSearch 
-                  placeholder="Search NFTs..."
-                  onSelect={handleNFTSelect}
-                />
-              </div>
-              <ChainSwitcher />
-              <ConnectButton label="Connected" showBalance={false} />
+            {/* Wallet Connect */}
+            <div className="flex justify-center mb-8">
+              <ConnectButton />
             </div>
           </div>
 
-          {/* Mobile search */}
-          <div className="lg:hidden mb-6">
-            <VerifiedNFTSearch 
-              placeholder="Search NFTs..."
-              onSelect={handleNFTSelect}
-            />
-          </div>
+          {/* Main Content */}
+          {isConnected ? (
+            <div className="space-y-6">
+              {/* Action Buttons */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Link
+                  href="/auction"
+                  className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 rounded-xl p-6 text-center transition-all transform hover:scale-105"
+                >
+                  <div className="text-3xl mb-2">🔍</div>
+                  <h3 className="text-xl font-semibold mb-2">Browse Auctions</h3>
+                  <p className="text-zinc-300 text-sm">View and bid on active auctions</p>
+                </Link>
+                
+                <Link
+                  href="/auction/create"
+                  className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 rounded-xl p-6 text-center transition-all transform hover:scale-105"
+                >
+                  <div className="text-3xl mb-2">➕</div>
+                  <h3 className="text-xl font-semibold mb-2">Create Auction</h3>
+                  <p className="text-zinc-300 text-sm">Start a new sealed-bid auction</p>
+                </Link>
+              </div>
 
-          {/* Main trading interface */}
-          <TradeInterface userAddress={address || ''} TradePanelComponent={TradePanel} />
+              {/* Welcome Card */}
+              <div className="bg-zinc-900/50 backdrop-blur-lg border border-zinc-800 rounded-2xl p-8">
+                <h2 className="text-2xl font-semibold mb-6">Welcome, {address?.slice(0, 6)}...{address?.slice(-4)}</h2>
+                
+                <div className="space-y-4">
+                  <div className="bg-zinc-800/50 p-6 rounded-xl">
+                    <h3 className="text-lg font-semibold mb-2">🎯 What is Private Auction?</h3>
+                    <p className="text-zinc-300">
+                      A sealed-bid auction system where all bids are encrypted on-chain using FHEVM. 
+                      Only the auction creator can decrypt bids when the auction ends.
+                    </p>
+                  </div>
+
+                  <div className="bg-zinc-800/50 p-6 rounded-xl">
+                    <h3 className="text-lg font-semibold mb-2">🔐 Privacy Features</h3>
+                    <ul className="list-disc list-inside text-zinc-300 space-y-2">
+                      <li>Encrypted reserve prices</li>
+                      <li>Encrypted bid storage</li>
+                      <li>Homomorphic bid comparisons</li>
+                      <li>Permission-based decryption</li>
+                    </ul>
+                  </div>
+
+                  <div className="bg-zinc-800/50 p-6 rounded-xl">
+                    <h3 className="text-lg font-semibold mb-2">⚡ How It Works</h3>
+                    <div className="grid grid-cols-4 gap-4 text-center text-sm">
+                      <div>
+                        <div className="text-2xl mb-1">1️⃣</div>
+                        <p className="text-zinc-400">Create auction with encrypted reserve</p>
+                      </div>
+                      <div>
+                        <div className="text-2xl mb-1">2️⃣</div>
+                        <p className="text-zinc-400">Bidders place encrypted bids</p>
+                      </div>
+                      <div>
+                        <div className="text-2xl mb-1">3️⃣</div>
+                        <p className="text-zinc-400">Bids stay private</p>
+                      </div>
+                      <div>
+                        <div className="text-2xl mb-1">4️⃣</div>
+                        <p className="text-zinc-400">Winner revealed at end</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="bg-zinc-900/50 backdrop-blur-lg border border-zinc-800 rounded-2xl p-8 text-center">
+              <p className="text-zinc-400 text-lg mb-6">
+                Connect your wallet to get started
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <div className="bg-zinc-800/50 p-4 rounded-xl">
+                  <div className="text-2xl mb-2">🔐</div>
+                  <p className="text-zinc-400">Encrypted Bids</p>
+                </div>
+                <div className="bg-zinc-800/50 p-4 rounded-xl">
+                  <div className="text-2xl mb-2">🛡️</div>
+                  <p className="text-zinc-400">Fair Auctions</p>
+                </div>
+                <div className="bg-zinc-800/50 p-4 rounded-xl">
+                  <div className="text-2xl mb-2">⚡</div>
+                  <p className="text-zinc-400">On-Chain Privacy</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Built with Zama */}
+          <div className="mt-8 text-center">
+            <p className="text-zinc-500 text-sm">
+              Built with <span className="text-purple-400">Zama FHEVM</span> • Powered by Fully Homomorphic Encryption
+            </p>
+          </div>
         </div>
       </div>
     </div>
-  );
-} 
+  )
+}

@@ -1,12 +1,7 @@
 'use client'
 
 import '@rainbow-me/rainbowkit/styles.css'
-import { connectorsForWallets, RainbowKitProvider, darkTheme, lightTheme, Theme } from '@rainbow-me/rainbowkit'
-import {
-  injectedWallet,
-  metaMaskWallet,
-  coinbaseWallet,
-} from '@rainbow-me/rainbowkit/wallets'
+import { RainbowKitProvider, darkTheme, lightTheme, Theme, getDefaultWallets } from '@rainbow-me/rainbowkit'
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -40,22 +35,17 @@ const { chains, publicClient } = configureChains(
   [publicProvider()]
 )
 
-console.log('🔗 WalletProvider: Chains configured:', chains)
-console.log('🔗 WalletProvider: Public client configured:', !!publicClient)
+// WalletConnect Cloud Project ID - Get yours free at https://cloud.walletconnect.com
+const projectId = '2aca272d18deb10ff748260da5f78bfd'
 
-const connectors = connectorsForWallets([
-  {
-    groupName: 'Popular',
-    wallets: [
-      metaMaskWallet({ projectId: 'fhevm-nft-trading', chains }),
-      injectedWallet({ chains }),
-      coinbaseWallet({ appName: 'fhEVM NFT Trading', chains }),
-    ],
-  },
-])
+const { connectors } = getDefaultWallets({
+  appName: 'Private Auction FHEVM',
+  projectId,
+  chains,
+})
 
 const wagmiConfig = createConfig({
-  autoConnect: false,
+  autoConnect: true,
   connectors,
   publicClient
 })

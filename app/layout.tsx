@@ -6,8 +6,8 @@ import { Suspense } from 'react'
 import { ThemeProvider } from './context/ThemeContext'
 
 export const metadata = {
-  title: 'Sharki | Home of NFTs',
-  description: 'Home of NFTs on the Monad network',
+  title: 'Private Auction | FHEVM',
+  description: 'Sealed-bid auctions with encrypted bids using Zama FHEVM',
   icons: {
     icon: '/favicon.png',
   },
@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className="antialiased bg-zinc-950 text-white">
+      <body className="antialiased bg-zinc-950 text-white" suppressHydrationWarning>
         <ThemeProvider>
           <Suspense fallback={<div>Loading...</div>}>
             <Providers>

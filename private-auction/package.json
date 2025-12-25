@@ -1,0 +1,24 @@
+{
+  "name": "private-auction-fhevm",
+  "version": "1.0.0",
+  "description": "Private sealed-bid auction system using Zama FHEVM",
+  "scripts": {
+    "compile": "hardhat compile",
+    "deploy": "hardhat run scripts/deploy.js --network",
+    "test": "hardhat test",
+    "node": "hardhat node"
+  },
+  "dependencies": {
+    "@fhevm/solidity": "^0.8.0",
+    "@openzeppelin/contracts": "^5.4.0",
+    "ethers": "^6.14.4",
+    "fhevmjs": "^0.6.2"
+  },
+  "devDependencies": {
+    "@fhevm/hardhat-plugin": "^0.1.0",
+    "@nomicfoundation/hardhat-ethers": "^3.0.0",
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.24.3"
+  }
+}
+
