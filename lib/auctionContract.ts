@@ -1,7 +1,7 @@
 // Private Auction Contract Configuration
 // Deploy this contract and update the address below
 
-export const AUCTION_CONTRACT_ADDRESS = "0x3bC9876Aa5836e62DF707474E2238B06c84321f9"; // ✅ Deployed on Sepolia!
+export const AUCTION_CONTRACT_ADDRESS = "0xad54c0BD7aF07595Dd7a876aa5C1ED7Dd5Da4673"; // ✅ FHEVM v0.9 on Sepolia!
 
 export const AUCTION_ABI = [
   // Events

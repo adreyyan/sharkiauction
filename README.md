@@ -1,15 +1,15 @@
-# 🔨 Private Auction System - FHEVM
+# 🔨 Private Auction System - FHEVM v0.9
 
 **Sealed-bid auctions with encrypted bids using Zama's Fully Homomorphic Encryption (FHE)**
 
-[![Deployed on Sepolia](https://img.shields.io/badge/Sepolia-Deployed-green)](https://sepolia.etherscan.io/address/0x3bC9876Aa5836e62DF707474E2238B06c84321f9)
-[![Built with FHEVM](https://img.shields.io/badge/FHEVM-Zama-purple)](https://docs.zama.ai/fhevm)
+[![Deployed on Sepolia](https://img.shields.io/badge/Sepolia-Deployed-green)](https://sepolia.etherscan.io/address/0xad54c0BD7aF07595Dd7a876aa5C1ED7Dd5Da4673)
+[![Built with FHEVM](https://img.shields.io/badge/FHEVM_v0.9-Zama-purple)](https://docs.zama.ai/fhevm)
 
 ---
 
 ## 🔗 Live Contract
 
-**Sepolia Testnet:** https://sepolia.etherscan.io/address/0x3bC9876Aa5836e62DF707474E2238B06c84321f9
+**Sepolia Testnet:** https://sepolia.etherscan.io/address/0xad54c0BD7aF07595Dd7a876aa5C1ED7Dd5Da4673
 
 ---
 
@@ -47,9 +47,9 @@
 | Property | Value |
 |----------|-------|
 | **Network** | Sepolia Testnet |
-| **Contract Address** | `0x3bC9876Aa5836e62DF707474E2238B06c84321f9` |
-| **Auction Fee** | 0.01 ETH |
-| **FHEVM Version** | 0.8.0 |
+| **Contract Address** | `0xad54c0BD7aF07595Dd7a876aa5C1ED7Dd5Da4673` |
+| **Auction Fee** | 0.001 ETH |
+| **FHEVM Version** | 0.9 (ZamaEthereumConfig) |
 
 ---
 

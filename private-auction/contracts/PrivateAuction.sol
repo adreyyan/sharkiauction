@@ -4,22 +4,27 @@ pragma solidity ^0.8.24;
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Pausable.sol";
 import { FHE, euint64, euint256, ebool } from "@fhevm/solidity/lib/FHE.sol";
-import { SepoliaConfig } from "@fhevm/solidity/config/ZamaConfig.sol";
+import { ZamaEthereumConfig } from "@fhevm/solidity/config/ZamaConfig.sol";
 
 /**
  * @title PrivateAuction
- * @dev Sealed-bid auction system with encrypted bids using FHEVM
+ * @dev Sealed-bid auction system with encrypted bids using FHEVM v0.9
  * 
- * @notice Privacy Features (same structure as approved sharkitrading):
+ * Privacy Features:
  * - All bids encrypted using euint64
  * - Reserve price encrypted on-chain
  * - FHE.allow() permission system for access control
  * - TrivialEncrypt events prove encryption on Etherscan
- * - Only auction creator can decrypt bids at end
+ * - Self-relaying decryption model (v0.9)
  * 
- * @notice Deployed on Sepolia with Zama's fhEVM
+ * FHEVM v0.9 Migration:
+ * - Uses ZamaEthereumConfig (replaces SepoliaConfig)
+ * - Self-relaying decryption via Zama relayer-sdk
+ * - FHE.makePubliclyDecryptable for public decryption
+ * 
+ * Deployed on Sepolia with Zama fhEVM v0.9
  */
-contract PrivateAuction is ReentrancyGuard, Pausable, SepoliaConfig {
+contract PrivateAuction is ReentrancyGuard, Pausable, ZamaEthereumConfig {
     
     // ═══════════════════════════════════════════════════════════════
     // STATE VARIABLES
