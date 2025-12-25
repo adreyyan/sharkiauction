@@ -1,13 +1,22 @@
-# 🔨 Private Auction System - FHEVM v0.9
+# 🦈 Sharki Auction - Private Auction System
 
 **Sealed-bid auctions with encrypted bids using Zama's Fully Homomorphic Encryption (FHE)**
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-sharkiauction.vercel.app-black?style=for-the-badge&logo=vercel)](https://sharkiauction.vercel.app)
+
 [![Deployed on Sepolia](https://img.shields.io/badge/Sepolia-Deployed-green)](https://sepolia.etherscan.io/address/0xad54c0BD7aF07595Dd7a876aa5C1ED7Dd5Da4673)
 [![Built with FHEVM](https://img.shields.io/badge/FHEVM_v0.9-Zama-purple)](https://docs.zama.ai/fhevm)
+[![Next.js](https://img.shields.io/badge/Next.js-15.5.9-black)](https://nextjs.org)
 
 ---
 
-## 🔗 Live Contract
+## 🌐 Live Demo
+
+**🔗 https://sharkiauction.vercel.app**
+
+---
+
+## 🔗 Smart Contract
 
 **Sepolia Testnet:** https://sepolia.etherscan.io/address/0xad54c0BD7aF07595Dd7a876aa5C1ED7Dd5Da4673
 
@@ -55,11 +64,14 @@
 
 ## 🛠️ Tech Stack
 
-- **Smart Contract**: Solidity 0.8.24 + FHEVM
-- **Frontend**: Next.js 14 + React + TypeScript
-- **Styling**: Tailwind CSS
-- **Wallet**: RainbowKit + wagmi
-- **Encryption**: Zama FHEVM (`euint64`, `FHE.asEuint64()`, `FHE.allow()`)
+| Layer | Technology |
+|-------|------------|
+| **Smart Contract** | Solidity 0.8.24 + FHEVM |
+| **Frontend** | Next.js 15 + React + TypeScript |
+| **Styling** | Tailwind CSS |
+| **Wallet** | RainbowKit + wagmi |
+| **Encryption** | Zama FHEVM (`euint64`, `FHE.asEuint64()`, `FHE.allow()`) |
+| **Deployment** | Vercel |
 
 ---
 
@@ -144,7 +156,19 @@ Log: Allowed
 - [x] Deployed to Sepolia
 - [x] Working frontend UI
 - [x] Wallet integration (MetaMask, Coinbase, Phantom)
+- [x] Live deployment on Vercel
 - [x] Documentation
+
+---
+
+## 🔗 Links
+
+| Resource | URL |
+|----------|-----|
+| **Live Demo** | https://sharkiauction.vercel.app |
+| **Smart Contract** | https://sepolia.etherscan.io/address/0xad54c0BD7aF07595Dd7a876aa5C1ED7Dd5Da4673 |
+| **GitHub** | https://github.com/adreyyan/sharkiauction |
+| **Zama FHEVM Docs** | https://docs.zama.ai/fhevm |
 
 ---
 
